@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: movie-service
+          uri: lb://MICROSERVICES-MOVIE-SERVICE
+          predicates:
+            - Path=/movies,/movies/**
+
+        - id: booking-service
+          uri: lb://MICROSERVICES-BOOKING-SERVICE
+          predicates:
+            - Path=/bookings,/bookings/**
+            
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
